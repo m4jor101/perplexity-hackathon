@@ -1,0 +1,60 @@
+{
+  "manifest_version": 3,
+  "name": "Perplexity Browser Companion",
+  "version": "1.0.0",
+  "description": "Internet-enabled AI Browser Companion powered by Perplexity Sonar API",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "sidePanel",
+    "contextMenus",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "side_panel": {
+    "default_path": "index.html"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "Perplexity Browser Companion"
+  },
+  "background": {
+    "service_worker": "background/index.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "commands": {
+    "capture_selection": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+X"
+      },
+      "description": "Capture selected text and send to AI Assistant"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "icons/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

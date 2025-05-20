@@ -1,0 +1,161 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+    
+    --card: 180 17% 98%;
+    --card-foreground: 222 47% 11%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    
+    --primary: 228 90% 57%;
+    --primary-foreground: 210 40% 98%;
+    
+    --secondary: 228 7% 95%;
+    --secondary-foreground: 222 47% 11%;
+    
+    --muted: 228 7% 95%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    
+    --accent: 228 90% 57%;
+    --accent-foreground: 210 40% 98%;
+    
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 228 90% 57%;
+    
+    --radius: 0.5rem;
+  }
+ 
+  .dark {
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+    
+    --card: 222 47% 10%;
+    --card-foreground: 210 40% 98%;
+    
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+    
+    --primary: 228 90% 67%;
+    --primary-foreground: 222 47% 11%;
+    
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    
+    --accent: 228 90% 67%;
+    --accent-foreground: 222 47% 11%;
+    
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 228 90% 67%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInFromBottom {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes perplexityPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); opacity: 0.5; }
+  50% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.5; }
+}
+
+.animate-in {
+  animation: fadeIn 0.3s ease-out forwards, slideInFromBottom 0.3s ease-out forwards;
+}
+
+.perplexity-loader {
+  animation: perplexityPulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.perplexity-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Citations hover effect */
+.citation-card {
+  @apply transition-all duration-200;
+}
+
+.citation-card:hover {
+  @apply bg-blue-50 dark:bg-blue-900/20;
+}
+
+/* Message transitions */
+.message-enter {
+  @apply transition-all duration-300 ease-out;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.message-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.message-block {
+  @apply relative;
+}
+
+.message-block::before {
+  content: '';
+  @apply absolute left-0 top-0 h-full w-1 bg-transparent transition-colors duration-200;
+}
+
+.message-block:hover::before {
+  @apply bg-primary/10;
+}
+
+.model-selector {
+  @apply relative overflow-hidden rounded-lg transition-all;
+}
+
+.model-selector::after {
+  content: '';
+  @apply absolute inset-0 rounded-lg ring-1 ring-inset ring-black/5 dark:ring-white/5;
+}
+
+/* Responsiveness */
+@media (max-width: 640px) {
+  .max-w-\[85\%\] {
+    max-width: 95%;
+  }
+}
