@@ -1,6 +1,6 @@
 # Perplexity Browser Companion
 
-![Perplexity Browser Companion Logo](icons/icon128.png)
+![Perplexity Browser Companion Logo](public/icons/icon128.png)
 
 ## Overview
 
@@ -49,8 +49,9 @@ npm run dev
 ## Usage
 
 1. **Open the Side Panel**: Click on the extension icon in your browser toolbar to open the Perplexity Browser Companion side panel
-2. **Text Selection**: Select any text on a webpage and press `Ctrl+Shift+X` to send it to the AI assistant
-3. **Context Menu**: Right-click on selected text and choose the Perplexity Browser Companion option from the context menu
+2. **Configure Settings**: Click on the settings icon in the side panel to configure the extension's settings to enter Perrplexity API key and choose your preferred theme mode.
+3. **Converse with Perplexity**: Select any sonar modal that perplexity supports and select text on a webpage to send to AI for context or directly ask questions.
+
 
 ## Tech Stack
 
