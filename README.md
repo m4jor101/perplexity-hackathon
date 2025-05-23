@@ -9,7 +9,7 @@ Perplexity Browser Companion is a Chrome extension that provides an AI assistant
 ## Features
 
 - **Browser Side Panel Integration**: Access the AI assistant directly from your browser's side panel
-- **Text Selection Analysis**: Select text on any webpage and send it to the AI assistant with a keyboard shortcut (Ctrl+Shift+X)
+- **Text Selection Analysis**: Select text on any webpage and send it to the AI assistant as context.
 - **Context-Aware Interactions**: Right-click menu integration for contextual AI assistance
 - **Markdown Support**: View AI responses with proper formatting including code blocks and tables
 - **Persistent Storage**: Conversation history is saved between sessions

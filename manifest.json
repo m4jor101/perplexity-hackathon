@@ -41,9 +41,6 @@
   ],
   "commands": {
     "capture_selection": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+X"
-      },
       "description": "Capture selected text and send to AI Assistant"
     }
   },

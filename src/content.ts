@@ -90,29 +90,6 @@ if (!window.aiAssistantContentScriptInitialized) {
     }
   })
 
-  // Handle keyboard shortcut (Ctrl+Shift+X) directly in the page
-  document.addEventListener("keydown", (e: KeyboardEvent) => {
-    try {
-      if (e.ctrlKey && e.shiftKey && e.key === "X") {
-        const selection = window.getSelection()
-        if (selection && selection.toString().trim()) {
-          const selectedText = selection.toString().trim()
-          // Send to extension with immediate insert flag
-          sendMessageToExtension({
-            action: "textSelected",
-            text: selectedText,
-            insertImmediately: true,
-          })
-        }
-      }
-    } catch (error) {
-      console.warn(
-        "[ContentScript] Error in keydown listener (Ctrl+Shift+X):",
-        error
-      )
-      // Silent failure
-    }
-  })
 
   // Handle various message types from extension
   try {
