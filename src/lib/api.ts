@@ -23,45 +23,11 @@ interface APIMessage {
   content: string
 }
 
-interface SonarError {
-  error: string
-  message?: string
-}
-
-/**
- * Sanitize a string to make it safe for JSON
- * This helps prevent unterminated string errors
- */
-function sanitizeJsonString(str: string): string {
-  if (!str) return ""
-
-  // First try to detect if the string contains any problematic characters
-  // that might cause JSON parsing issues
-  const containsSpecialChars =
-    /[\u0000-\u001F\u007F-\u009F\u2028\u2029"\\]/.test(str)
-
-  if (!containsSpecialChars) {
-    return str // Return as is if no special characters
-  }
-
-  // If string contains problematic characters, sanitize it
-  // to ensure it's safe for JSON encoding
-  return str
-    .replace(/\\/g, "\\\\") // Escape backslashes first
-    .replace(/"/g, '\\"') // Escape double quotes
-    .replace(/\n/g, "\\n") // Escape newlines
-    .replace(/\r/g, "\\r") // Escape carriage returns
-    .replace(/\t/g, "\\t") // Escape tabs
-    .replace(/\f/g, "\\f") // Escape form feeds
-    .replace(
-      /[\u0000-\u001F\u007F-\u009F\u2028\u2029]/g, // Escape control chars
-      (char) => "\\u" + ("0000" + char.charCodeAt(0).toString(16)).slice(-4)
-    )
-}
-
 /**
  * Process query through Perplexity Sonar API
  */
+const DEFAULT_SYSTEM_MESSAGE = "You are a AI friend called Perplexity.";
+
 export async function processAIResponse(
   prompt: string,
   messages: Message[],
@@ -71,8 +37,13 @@ export async function processAIResponse(
   onError?: (error: any) => void
 ): Promise<{ text: string; citations?: Citation[] }> {
   try {
+    // Add system message if not present
+    const messagesWithSystem = messages.some(msg => msg.role === 'system') 
+      ? messages 
+      : [{ role: 'system', content: DEFAULT_SYSTEM_MESSAGE }, ...messages];
+    
     // Format messages according to Perplexity API requirements
-    const apiMessages: APIMessage[] = formatMessagesForAPI(messages, prompt)
+    const apiMessages: APIMessage[] = formatMessagesForAPI(messagesWithSystem, prompt)
 
     // Sanitize messages to ensure JSON safety
     const sanitizedMessages = apiMessages.map((msg) => ({
@@ -303,20 +274,6 @@ function formatMessagesForAPI(
 
   // If we have conversation messages, process them
   if (conversationMessages.length > 0) {
-    // Ensure we start with a user message
-    if (conversationMessages[0].role !== "user") {
-      // If first message is not from user, insert a placeholder user message
-      formattedConversation.push({
-        role: "user",
-        content: "Hello, I need assistance.",
-      })
-    }
-
-    // Add the first message
-    formattedConversation.push({
-      role: conversationMessages[0].role,
-      content: conversationMessages[0].content,
-    })
 
     // Process remaining messages ensuring alternation
     for (let i = 1; i < conversationMessages.length; i++) {

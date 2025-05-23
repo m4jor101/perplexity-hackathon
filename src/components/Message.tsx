@@ -123,12 +123,13 @@ export function Message({ message, showReasoning = true }: MessageProps) {
     });
   };
 
-  // Process content for citation references when citations change
+  // Process content for citation references when citations or content changes
   useEffect(() => {
     if (message.role === 'assistant' && message.citations && message.citations.length > 0) {
-      setProcessedContent(transformCitationReferences(processedContent));
+      const transformedContent = transformCitationReferences(message.content);
+      setProcessedContent(transformedContent);
     }
-  }, [message.citations, processedContent]);
+  }, [message.citations, message.content]);
 
   const hasCitations = message.citations && message.citations.length > 0;
 
